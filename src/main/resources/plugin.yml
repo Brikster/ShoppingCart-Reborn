@@ -1,0 +1,7 @@
+name: ShoppingCart Reborn
+version: ${project.version}
+main: ru.mrbrikster.shoppingcartreborn.ShoppingCartReborn
+authors: [MrBrikster]
+
+depend: [Vault]
+soft-depend: [PermissionsEx, LuckPerms]
