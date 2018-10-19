@@ -1,6 +1,7 @@
 package ru.mrbrikster.shoppingcartreborn.permissions;
 
 import me.lucko.luckperms.api.LuckPermsApi;
+import me.lucko.luckperms.api.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -16,9 +17,15 @@ public class LuckPermsProvider implements PermissionProvider {
         if (luckPermsProvider != null) {
             LuckPermsApi api = luckPermsProvider.getProvider();
 
-            return api.getUser(player.getUniqueId()).setPermission(api.getNodeFactory()
+            User user = api.getUser(player.getUniqueId());
+
+            boolean result = user.setPermission(api.getNodeFactory()
                     .newBuilder("group." + group)
                     .setExpiry(time, TimeUnit.SECONDS).build()).wasSuccess();
+
+            api.getUserManager().saveUser(user);
+
+            return result;
         }
 
         return false;
@@ -29,8 +36,14 @@ public class LuckPermsProvider implements PermissionProvider {
         if (luckPermsProvider != null) {
             LuckPermsApi api = luckPermsProvider.getProvider();
 
-            return api.getUser(player.getUniqueId()).setPermission(api.getNodeFactory()
+            User user = api.getUser(player.getUniqueId());
+
+            boolean result = user.setPermission(api.getNodeFactory()
                     .newBuilder("group." + group).build()).wasSuccess();
+
+            api.getUserManager().saveUser(user);
+
+            return result;
         }
 
         return false;

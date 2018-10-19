@@ -1,0 +1,20 @@
+# ******************************************************
+# * ShoppingCart Reborn.
+#   Store player's purchases in MySQL database.
+#   Creator: MrBrikster.
+# * Optional dependencies:
+#   Vault, PermissionsEx, LuckPerms.
+# ******************************************************
+
+# EN) Database credentials.
+# RU) Данные для подключения к БД.
+database:
+  address: 127.0.0.1
+  port: 3306
+  user: root
+  password: ''
+  database: shopcart
+
+# EN) User will automatically get all purchases from database after joining.
+# RU) Пользователь будет автоматически получать все покупки из БД при входе.
+auto-cart-all: true
