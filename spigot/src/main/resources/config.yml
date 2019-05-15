@@ -1,0 +1,31 @@
+# ******************************************************
+# * ShoppingCart Reborn.
+#   Хранение данных о покупках в базе данных.
+#   Автор: MrBrikster (https://vk.com/brikster)
+#
+# * Опциональные зависимости:
+#   PermissionsEx, LuckPerms, Vault.
+# ******************************************************
+
+# Данные для подключения к БД.
+database:
+  address: 127.0.0.1
+  port: 3306
+  username: root
+  password: ''
+  database: shopcart
+  ssl: false
+
+# Автоматическое получение товаров из корзины при входе.
+auto-cart-all: true
+
+# Локализация
+messages:
+  only-player: '&cКоманда предназначена только для игроков.'
+  cart-all: '&aВам выданы все товары из вашей корзины.'
+  cart-get: '&aВы получили товар из корзины'
+  no-purchases: '&cУ вас нет товаров в корзине.'
+  command-usage: '&cИспользование: /%label% <all|open>'
+
+  menu-title: 'Корзина'
+  menu-get-purchase: '&eНажмите сюда, чтобы забрать предмет'

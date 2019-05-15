@@ -1,0 +1,9 @@
+language: java
+deploy:
+  provider: releases
+  api_key:
+    secure: hhMrVG5PlT2nnaLfUOi2Wnuqq3KUzC0KjsneQc0z19h09D78xUvZcgYETiyUEy2AfGtZpXGTKWjvIyRE5q5rdXWobISk5JKfcXEwe9WMcn7BOJh+HNVkXIgyfZleIkRhpgBcD8M3vds0Np8oAQyHrChii4HCClpFip//t+iJGLvRfb9hVzbL6hqW/6oXFDHpZOAiai893Hf3HDJDKlkf+fIWQ/Wl/iLGC9uqReTyMuonSGlUaQzD7t7iBInPaNLhsqT/rz2eK/+s6Bwp+GdaUWzpBDO1NcgtPaN5JMTCQWu/Q9qf1fEEATiVDWr7XSP6ux6dIpb8V20ZEVHaXYsj6TsNSZiZboFhiVnzUNlhVJa50xC3fDbY2vdMjlFkDHGVAHympI391AXSz8PYFWuwC4JK9x7lKyOiA34bNUEbYmG126qh9SlucEK6Cvle+QdJxl+hZCbNflFTAQ97AtyF6wwwH3CmKWX916uzXA9fjzbtK6qhrgaOVz29KyGXPI70NpU8TLoMfstCaw21Jbc/XoeYX+YR2nWeQf/FZZrqUoFqGavALkOhPDGpa2MazAuUBx4BUUF/8LzYnPFg9ywmoEq9v2PQdUtkBfUnrSUXp4OPVllOhkcwgffudmPmvAFItD/Wn5+zlgpSawTy82cNMHZus0OtOxZYcft5yEU48GA=
+  file: spigot/target/ShoppingCart-Reborn-spigot.jar
+  skip_cleanup: true
+  on:
+    tags: true

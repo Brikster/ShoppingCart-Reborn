@@ -1,0 +1,6 @@
+name: ShoppingCart-Reborn
+version: ${project.version}
+main: ru.mrbrikster.shoppingcartreborn.spigot.ShoppingCartReborn
+authors: [MrBrikster]
+
+soft-depend: [PermissionsEx, LuckPerms, Vault]
