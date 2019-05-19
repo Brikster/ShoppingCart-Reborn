@@ -1,4 +1,4 @@
-package ru.mrbrikster.shoppingcartreborn.spigot.money;
+package ru.mrbrikster.shoppingcartreborn.spigot.providers.money;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;

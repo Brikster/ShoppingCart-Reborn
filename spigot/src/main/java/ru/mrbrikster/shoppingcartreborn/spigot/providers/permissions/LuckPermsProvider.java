@@ -1,4 +1,4 @@
-package ru.mrbrikster.shoppingcartreborn.spigot.permissions;
+package ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions;
 
 import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.User;

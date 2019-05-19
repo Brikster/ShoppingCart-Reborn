@@ -1,4 +1,4 @@
-package ru.mrbrikster.shoppingcartreborn.spigot.permissions;
+package ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions;
 
 import ru.mrbrikster.shoppingcartreborn.cart.User;
 import ru.mrbrikster.shoppingcartreborn.providers.PermissionProvider;

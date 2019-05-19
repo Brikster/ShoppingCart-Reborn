@@ -164,7 +164,6 @@ public abstract class Menu {
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', icon.getName()));
                 itemMeta.setLore(icon.getLore().stream().map((str) -> ChatColor.translateAlternateColorCodes('&', str)).collect(Collectors.toList()));
-                itemMeta.addItemFlags(ItemFlag.values());
 
                 itemStack.setItemMeta(itemMeta);
 

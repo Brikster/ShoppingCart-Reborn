@@ -13,11 +13,11 @@ import ru.mrbrikster.shoppingcartreborn.spigot.commands.CommandManager;
 import ru.mrbrikster.shoppingcartreborn.spigot.providers.SpigotCommandExecutionProvider;
 import ru.mrbrikster.shoppingcartreborn.spigot.config.Messages;
 import ru.mrbrikster.shoppingcartreborn.spigot.listeners.PlayerListener;
-import ru.mrbrikster.shoppingcartreborn.spigot.money.VaultEconomyProvider;
-import ru.mrbrikster.shoppingcartreborn.spigot.permissions.DefaultProvider;
-import ru.mrbrikster.shoppingcartreborn.spigot.permissions.LuckPermsProvider;
-import ru.mrbrikster.shoppingcartreborn.spigot.permissions.PermissionsExProvider;
-import ru.mrbrikster.shoppingcartreborn.spigot.permissions.VaultPermissionProvider;
+import ru.mrbrikster.shoppingcartreborn.spigot.providers.money.VaultEconomyProvider;
+import ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions.DefaultProvider;
+import ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions.LuckPermsProvider;
+import ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions.PermissionsExProvider;
+import ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions.VaultPermissionProvider;
 import ru.mrbrikster.shoppingcartreborn.spigot.providers.SpigotItemProvider;
 
 public final class ShoppingCartReborn extends BukkitBasePlugin implements ShoppingCartRebornPlugin {

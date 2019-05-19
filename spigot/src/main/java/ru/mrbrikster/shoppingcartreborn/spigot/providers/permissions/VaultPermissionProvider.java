@@ -1,4 +1,4 @@
-package ru.mrbrikster.shoppingcartreborn.spigot.permissions;
+package ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions;
 
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
