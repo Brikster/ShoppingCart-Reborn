@@ -1,8 +1,8 @@
 package ru.mrbrikster.shoppingcartreborn.spigot.cart;
 
 import ru.mrbrikster.shoppingcartreborn.spigot.ShoppingCartReborn;
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.menu.Icon;
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.menu.PaginatedMenu;
+import ru.mrbrikster.baseplugin.menu.Icon;
+import ru.mrbrikster.baseplugin.menu.PaginatedMenu;
 import ru.mrbrikster.shoppingcartreborn.spigot.config.Messages;
 
 import java.util.List;

@@ -6,7 +6,7 @@ import ru.mrbrikster.shoppingcartreborn.ShoppingCartRebornPlugin;
 import ru.mrbrikster.shoppingcartreborn.cart.User;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.Purchase;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.PurchaseDisplayData;
-import ru.mrbrikster.shoppingcartreborn.objects.Item;
+import ru.mrbrikster.shoppingcartreborn.objects.SerializableItem;
 import ru.mrbrikster.shoppingcartreborn.providers.ItemProvider;
 
 import java.util.ArrayList;
@@ -14,19 +14,19 @@ import java.util.List;
 
 public class ItemPurchase implements Purchase {
 
-    @Getter private final Item item;
+    @Getter private final SerializableItem serializableItem;
     private final PurchaseDisplayData purchaseDisplayData;
     private final ItemProvider itemProvider;
     @Getter private int id;
 
     /**
      * Purchase of Item.
-     * @param item Item.
+     * @param serializableItem SerializableItem.
      * @param purchaseDisplayData Display data for Menu.
      * @param itemProvider ItemProvider.class implementation.
      */
-    public ItemPurchase(Item item, PurchaseDisplayData purchaseDisplayData, ItemProvider itemProvider) {
-        this.item = item;
+    public ItemPurchase(SerializableItem serializableItem, PurchaseDisplayData purchaseDisplayData, ItemProvider itemProvider) {
+        this.serializableItem = serializableItem;
         this.purchaseDisplayData = purchaseDisplayData;
         this.itemProvider = itemProvider;
     }
@@ -69,7 +69,7 @@ public class ItemPurchase implements Purchase {
             lore = null;
         }
 
-        return new ItemPurchase(Item.builder()
+        return new ItemPurchase(SerializableItem.builder()
                 .minecraftId(minecraftId)
                 .dataValue(dataValue)
                 .count(count)
@@ -88,7 +88,7 @@ public class ItemPurchase implements Purchase {
     public boolean give(User user) {
         if (itemProvider == null) return false;
 
-        return itemProvider.give(user, item);
+        return itemProvider.give(user, serializableItem);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class ItemPurchase implements Purchase {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", "item");
 
-        JsonObject purchaseData = item.serialize();
+        JsonObject purchaseData = serializableItem.serialize();
 
         jsonObject.add("purchaseData", purchaseData);
         jsonObject.add("displayData", purchaseDisplayData.serialize());

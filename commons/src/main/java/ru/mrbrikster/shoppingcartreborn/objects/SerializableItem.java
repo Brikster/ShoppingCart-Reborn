@@ -10,7 +10,7 @@ import ru.mrbrikster.shoppingcartreborn.serialization.Serializable;
 import java.util.List;
 
 @Builder
-public class Item implements Serializable {
+public class SerializableItem implements Serializable {
 
     @Getter @Setter @NonNull public String minecraftId;
     @Getter @Setter public int dataValue;

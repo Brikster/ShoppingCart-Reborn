@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>shoppingcartreborn</artifactId>
         <groupId>ru.mrbrikster</groupId>
-        <version>1.0</version>
+        <artifactId>shoppingcartreborn</artifactId>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,7 +17,6 @@
     </properties>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -40,6 +39,12 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
+                            <relocations>
+                                <relocation>
+                                    <pattern>ru.mrbrikster.baseplugin</pattern>
+                                    <shadedPattern>ru.mrbrikster.shoppingcartreborn.spigot.baseplugin</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -70,6 +75,10 @@
             <id>enderzone-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -80,10 +89,10 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
-            <scope>provided</scope>
+            <groupId>com.github.Brikster</groupId>
+            <artifactId>BasePlugin</artifactId>
+            <version>v1.7</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -92,11 +101,17 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>ru.tehkode</groupId>
             <artifactId>PermissionsEx</artifactId>
             <version>1.23.4</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/PermissionsEx-1.23.4.jar</systemPath>
+            <systemPath>${project.basedir}/lib/PermissionsEx-1.23.4.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.lucko.luckperms</groupId>

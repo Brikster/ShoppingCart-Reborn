@@ -6,11 +6,15 @@
 
     <groupId>ru.mrbrikster</groupId>
     <artifactId>shoppingcartreborn</artifactId>
-    <version>1.0</version>
+    <version>1.0.2</version>
     <modules>
         <module>commons</module>
         <module>spigot</module>
     </modules>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+    </build>
 
     <packaging>pom</packaging>
 </project>

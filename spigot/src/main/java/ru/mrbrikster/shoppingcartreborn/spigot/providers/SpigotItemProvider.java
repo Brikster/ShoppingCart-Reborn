@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.mrbrikster.shoppingcartreborn.cart.User;
-import ru.mrbrikster.shoppingcartreborn.objects.Item;
+import ru.mrbrikster.shoppingcartreborn.objects.SerializableItem;
 import ru.mrbrikster.shoppingcartreborn.providers.ItemProvider;
 import ru.mrbrikster.shoppingcartreborn.spigot.ShoppingCartReborn;
 import ru.mrbrikster.shoppingcartreborn.spigot.cart.BukkitUser;
@@ -18,24 +18,24 @@ import java.util.stream.Collectors;
 public class SpigotItemProvider implements ItemProvider {
 
     @Override
-    public boolean give(User user, Item item) {
-        String minecraftId = item.getMinecraftId();
+    public boolean give(User user, SerializableItem serializableItem) {
+        String minecraftId = serializableItem.getMinecraftId();
 
         Material material = Materials.fromMinecraftId(minecraftId);
-        ItemStack itemStack = new ItemStack(material, item.getCount());
+        ItemStack itemStack = new ItemStack(material, serializableItem.getCount());
 
-        if (item.getDataValue() != 0) {
-            itemStack.setDurability((short) item.getDataValue());
+        if (serializableItem.getDataValue() != 0) {
+            itemStack.setDurability((short) serializableItem.getDataValue());
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        if (item.getName() != null) {
-            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', item.getName()));
+        if (serializableItem.getName() != null) {
+            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', serializableItem.getName()));
         }
 
-        if (item.getLore() != null) {
-            itemMeta.setLore(item.getLore().stream().map(loreString -> ChatColor.translateAlternateColorCodes('&', loreString)).collect(Collectors.toList()));
+        if (serializableItem.getLore() != null) {
+            itemMeta.setLore(serializableItem.getLore().stream().map(loreString -> ChatColor.translateAlternateColorCodes('&', loreString)).collect(Collectors.toList()));
         }
 
         itemStack.setItemMeta(itemMeta);

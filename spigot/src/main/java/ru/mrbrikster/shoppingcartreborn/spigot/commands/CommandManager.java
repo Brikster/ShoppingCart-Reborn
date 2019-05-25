@@ -1,6 +1,6 @@
 package ru.mrbrikster.shoppingcartreborn.spigot.commands;
 
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.plugin.BukkitBasePlugin;
+import ru.mrbrikster.baseplugin.plugin.BukkitBasePlugin;
 
 public class CommandManager {
 

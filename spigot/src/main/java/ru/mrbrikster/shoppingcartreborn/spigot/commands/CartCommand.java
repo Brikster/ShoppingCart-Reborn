@@ -9,8 +9,8 @@ import ru.mrbrikster.shoppingcartreborn.cart.purchase.Purchase;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.PurchaseDisplayData;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.types.ItemPurchase;
 import ru.mrbrikster.shoppingcartreborn.spigot.ShoppingCartReborn;
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.commands.BukkitCommand;
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.menu.Icon;
+import ru.mrbrikster.baseplugin.commands.BukkitCommand;
+import ru.mrbrikster.baseplugin.menu.Icon;
 import ru.mrbrikster.shoppingcartreborn.spigot.cart.BukkitUser;
 import ru.mrbrikster.shoppingcartreborn.spigot.cart.CartMenu;
 import ru.mrbrikster.shoppingcartreborn.spigot.config.Messages;
@@ -69,7 +69,7 @@ public class CartCommand extends BukkitCommand {
 
                                 iconList.add(Icon.builder()
                                         .type(purchase instanceof ItemPurchase
-                                                ? Materials.fromMinecraftId(((ItemPurchase) purchase).getItem().getMinecraftId())
+                                                ? Materials.fromMinecraftId(((ItemPurchase) purchase).getSerializableItem().getMinecraftId())
                                                 : Material.CHEST)
                                         .name("&6" + purchaseDisplayData.getName())
                                         .lore(purchaseDisplayData.getLore())

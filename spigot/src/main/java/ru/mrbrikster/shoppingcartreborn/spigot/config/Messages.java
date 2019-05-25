@@ -1,8 +1,8 @@
 package ru.mrbrikster.shoppingcartreborn.spigot.config;
 
 import org.bukkit.ChatColor;
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.config.Configuration;
-import ru.mrbrikster.shoppingcartreborn.spigot.baseplugin.plugin.BukkitBasePlugin;
+import ru.mrbrikster.baseplugin.config.Configuration;
+import ru.mrbrikster.baseplugin.plugin.BukkitBasePlugin;
 
 import java.util.function.Function;
 
