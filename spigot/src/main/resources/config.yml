@@ -15,7 +15,7 @@ database:
   password: ''
   database: shopcart
   tables:
-    puchases: purchases
+    purchases: purchases
     templates: templates
   ssl: false
 
