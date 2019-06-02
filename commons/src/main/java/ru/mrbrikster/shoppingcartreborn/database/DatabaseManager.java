@@ -28,9 +28,13 @@ public class DatabaseManager {
 
     private static final JsonParser JSON_PARSER = new JsonParser();
     private final ShoppingCartRebornPlugin shoppingCartRebornPlugin;
+    private final String purchasesTable;
+    private final String templatesTable;
 
     public DatabaseManager(ShoppingCartRebornPlugin shoppingCartRebornPlugin, DatabaseCredentials databaseCredentials) {
         this.shoppingCartRebornPlugin = shoppingCartRebornPlugin;
+        this.purchasesTable = databaseCredentials.getPurchasesTable();
+        this.templatesTable = databaseCredentials.getTemplatesTable();
 
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(String.format(
@@ -59,7 +63,7 @@ public class DatabaseManager {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection
                     .prepareStatement(
-                            "CREATE TABLE IF NOT EXISTS purchases (" +
+                            "CREATE TABLE IF NOT EXISTS " + purchasesTable + " (" +
                                     "id INTEGER AUTO_INCREMENT, " +
                                     "player_name VARCHAR(16) NOT NULL, " +
                                     "player_uuid CHAR(36) DEFAULT NULL, " +
@@ -72,7 +76,7 @@ public class DatabaseManager {
 
             statement = connection
                     .prepareStatement(
-                            "CREATE TABLE IF NOT EXISTS templates (" +
+                            "CREATE TABLE IF NOT EXISTS " + templatesTable + " (" +
                                     "id INTEGER AUTO_INCREMENT, " +
                                     "template VARCHAR(256), " +
                                     "PRIMARY KEY (id))");
@@ -90,13 +94,13 @@ public class DatabaseManager {
             if (user.getUniqueId() != null) {
                 preparedStatement = connection
                         .prepareStatement(
-                                "SELECT id, purchase FROM purchases WHERE player_name = ? OR player_uuid = ?");
+                                "SELECT id, purchase FROM " + purchasesTable + " WHERE player_name = ? OR player_uuid = ?");
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getUniqueId().toString());
             } else {
                 preparedStatement = connection
                         .prepareStatement(
-                                "SELECT id, purchase FROM purchases WHERE player_name = ?");
+                                "SELECT id, purchase FROM " + purchasesTable + " WHERE player_name = ?");
                 preparedStatement.setString(1, user.getName());
             }
 
@@ -127,7 +131,7 @@ public class DatabaseManager {
     public JsonObject getTemplate(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
-                     .prepareStatement("SELECT template FROM templates WHERE id = ?")) {
+                     .prepareStatement("SELECT template FROM " + templatesTable + " WHERE id = ?")) {
             preparedStatement.setInt(1, id);
 
             JsonObject jsonObject = null;
@@ -150,7 +154,7 @@ public class DatabaseManager {
     public boolean removePurchase(int id) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                            "DELETE FROM purchases WHERE id = ?");
+                            "DELETE FROM " + purchasesTable + " WHERE id = ?");
             preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();

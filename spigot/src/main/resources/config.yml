@@ -14,6 +14,9 @@ database:
   username: root
   password: ''
   database: shopcart
+  tables:
+    puchases: purchases
+    templates: templates
   ssl: false
 
 # Автоматическое получение товаров из корзины при входе.

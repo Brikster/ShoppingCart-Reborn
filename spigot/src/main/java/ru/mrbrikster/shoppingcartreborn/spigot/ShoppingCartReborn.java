@@ -68,6 +68,8 @@ public final class ShoppingCartReborn extends BukkitBasePlugin implements Shoppi
                 credentialsNode.getNode("username").getAsString("root"),
                 credentialsNode.getNode("password").getAsString(""),
                 credentialsNode.getNode("database").getAsString("shopcart"),
+                credentialsNode.getNode("tables.purchases").getAsString("purchases"),
+                credentialsNode.getNode("tables.templates").getAsString("templates"),
                 credentialsNode.getNode("ssl").getAsBoolean(false)
         );
         this.databaseManager = new DatabaseManager(this, databaseCredentials);

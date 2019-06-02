@@ -17,6 +17,8 @@ public class DatabaseCredentials {
     @Getter private String username;
     @Getter private String password;
     @Getter private String database;
+    @Getter private String purchasesTable;
+    @Getter private String templatesTable;
     @Getter private boolean useSSL;
 
 }
