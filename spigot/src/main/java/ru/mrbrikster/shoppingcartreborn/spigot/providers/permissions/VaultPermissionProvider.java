@@ -9,10 +9,10 @@ import ru.mrbrikster.shoppingcartreborn.spigot.cart.BukkitUser;
 
 public class VaultPermissionProvider implements PermissionProvider {
 
-    private static RegisteredServiceProvider<Permission> vaultProvider = Bukkit.getServicesManager().getRegistration(Permission.class);
+    private static final RegisteredServiceProvider<Permission> vaultProvider = Bukkit.getServicesManager().getRegistration(Permission.class);
 
     @Override
-    public boolean addToGroup(User user, String group, long time) {
+    public boolean addToGroup(User user, String group, Long time) {
         // Vault doesn't support timed permissions groups.
         return false;
     }
@@ -31,7 +31,7 @@ public class VaultPermissionProvider implements PermissionProvider {
     }
 
     @Override
-    public boolean addPermission(User user, String permission, long time) {
+    public boolean addPermission(User user, String permission, Long time) {
         // Vault doesn't support timed permissions.
         return false;
     }

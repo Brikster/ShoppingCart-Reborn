@@ -3,4 +3,6 @@ version: ${project.version}
 main: ru.mrbrikster.shoppingcartreborn.spigot.ShoppingCartReborn
 authors: [MrBrikster]
 
+api-version: 1.13
+
 soft-depend: [PermissionsEx, LuckPerms, Vault]

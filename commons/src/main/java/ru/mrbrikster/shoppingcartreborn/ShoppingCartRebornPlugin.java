@@ -6,6 +6,8 @@ import ru.mrbrikster.shoppingcartreborn.providers.EconomyProvider;
 import ru.mrbrikster.shoppingcartreborn.providers.ItemProvider;
 import ru.mrbrikster.shoppingcartreborn.providers.PermissionProvider;
 
+import java.util.logging.Logger;
+
 public interface ShoppingCartRebornPlugin {
 
     EconomyProvider getEconomyProvider();
@@ -17,5 +19,7 @@ public interface ShoppingCartRebornPlugin {
     ItemProvider getItemProvider();
 
     DatabaseManager getDatabaseManager();
+
+    Logger getLogger();
 
 }

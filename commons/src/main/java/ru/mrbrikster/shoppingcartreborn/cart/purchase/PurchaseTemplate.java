@@ -25,8 +25,8 @@ public class PurchaseTemplate {
     public static PurchaseTemplate get(ShoppingCartRebornPlugin shoppingCartRebornPlugin, JsonObject jsonObject) {
         if (jsonObject.has("template")
                 && jsonObject.get("template").isJsonPrimitive()
-                && jsonObject.getAsJsonPrimitive("template").isNumber()) {
-            return new PurchaseTemplate("", shoppingCartRebornPlugin.getDatabaseManager().getTemplate(jsonObject.getAsJsonPrimitive("template").getAsInt()), shoppingCartRebornPlugin);
+                && jsonObject.getAsJsonPrimitive("template").isString()) {
+            return new PurchaseTemplate("", shoppingCartRebornPlugin.getDatabaseManager().getTemplate(jsonObject.getAsJsonPrimitive("template").getAsString()), shoppingCartRebornPlugin);
         }
 
         return null;

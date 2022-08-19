@@ -29,8 +29,7 @@ public class PurchaseDisplayData implements Serializable {
         }
 
         List<String> lore;
-        if (jsonObject.has("lore")
-                && jsonObject.get("lore").isJsonArray()) {
+        if (jsonObject.has("lore") && jsonObject.get("lore").isJsonArray()) {
             lore = new ArrayList<>();
             jsonObject.getAsJsonArray("lore").forEach(jsonElement -> {
                         if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isString()) {

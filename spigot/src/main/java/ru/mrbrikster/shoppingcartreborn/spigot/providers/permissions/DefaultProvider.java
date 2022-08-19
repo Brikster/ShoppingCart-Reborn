@@ -6,22 +6,12 @@ import ru.mrbrikster.shoppingcartreborn.providers.PermissionProvider;
 public class DefaultProvider implements PermissionProvider {
 
     @Override
-    public boolean addToGroup(User user, String group, long time) {
+    public boolean addToGroup(User user, String group, Long time) {
         return false;
     }
 
     @Override
-    public boolean addToGroup(User user, String group) {
-        return false;
-    }
-
-    @Override
-    public boolean addPermission(User user, String permission, long time) {
-        return false;
-    }
-
-    @Override
-    public boolean addPermission(User user, String permission) {
+    public boolean addPermission(User user, String permission, Long time) {
         return false;
     }
 

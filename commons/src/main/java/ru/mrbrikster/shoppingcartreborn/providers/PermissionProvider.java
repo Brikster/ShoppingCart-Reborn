@@ -4,12 +4,16 @@ import ru.mrbrikster.shoppingcartreborn.cart.User;
 
 public interface PermissionProvider {
 
-    boolean addToGroup(User user, String group, long time);
+    boolean addToGroup(User user, String group, Long time);
 
-    boolean addToGroup(User user, String group);
+    default boolean addToGroup(User user, String group) {
+        return addToGroup(user, group, null);
+    }
 
-    public boolean addPermission(User user, String permission, long time);
+    boolean addPermission(User user, String permission, Long time);
 
-    public boolean addPermission(User user, String permission);
+    default boolean addPermission(User user, String permission) {
+        return addPermission(user, permission, null);
+    }
 
 }

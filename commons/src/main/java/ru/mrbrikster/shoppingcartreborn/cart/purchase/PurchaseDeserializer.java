@@ -19,23 +19,25 @@ public class PurchaseDeserializer implements Deserializer<Purchase> {
                 purchaseDisplayData = PurchaseDisplayData.deserialize(jsonObject.getAsJsonObject("displayData"));
             }
 
-            if (purchaseDisplayData == null && !jsonObject.get("type").getAsString().toLowerCase().equalsIgnoreCase("template")) {
+            String purchaseType = jsonObject.get("type").getAsString().toLowerCase();
+            if (purchaseDisplayData == null && !purchaseType.equalsIgnoreCase("template")) {
                 return null;
             }
 
-            switch(jsonObject.get("type").getAsString().toLowerCase()) {
+            JsonObject purchaseData = jsonObject.getAsJsonObject("purchaseData");
+            switch(purchaseType) {
                 case "money":
-                    return MoneyPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, jsonObject.getAsJsonObject("purchaseData"));
+                    return MoneyPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, purchaseData);
                 case "group":
-                    return GroupPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, jsonObject.getAsJsonObject("purchaseData"));
+                    return GroupPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, purchaseData);
                 case "permission":
-                    return PermissionPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, jsonObject.getAsJsonObject("purchaseData"));
+                    return PermissionPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, purchaseData);
                 case "command":
-                    return CommandPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, jsonObject.getAsJsonObject("purchaseData"));
+                    return CommandPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, purchaseData);
                 case "item":
-                    return ItemPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, jsonObject.getAsJsonObject("purchaseData"));
+                    return ItemPurchase.deserialize(shoppingCartRebornPlugin, purchaseDisplayData, purchaseData);
                 case "template":
-                    PurchaseTemplate purchaseTemplate = PurchaseTemplate.get(shoppingCartRebornPlugin, jsonObject.getAsJsonObject("purchaseData"));
+                    PurchaseTemplate purchaseTemplate = PurchaseTemplate.get(shoppingCartRebornPlugin, purchaseData);
 
                     if (purchaseTemplate == null) {
                         return null;

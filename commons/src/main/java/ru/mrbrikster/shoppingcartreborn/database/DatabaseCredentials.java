@@ -6,19 +6,23 @@
 
 package ru.mrbrikster.shoppingcartreborn.database;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
-@AllArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@Data(staticConstructor = "of")
 public class DatabaseCredentials {
 
-    @Getter private String address;
-    @Getter private int port;
-    @Getter private String username;
-    @Getter private String password;
-    @Getter private String database;
-    @Getter private String purchasesTable;
-    @Getter private String templatesTable;
-    @Getter private boolean useSSL;
+    String address;
+    int port;
+    String username;
+    String password;
+    String database;
+    String purchasesTable;
+    String templatesTable;
+    boolean useSSL;
 
 }

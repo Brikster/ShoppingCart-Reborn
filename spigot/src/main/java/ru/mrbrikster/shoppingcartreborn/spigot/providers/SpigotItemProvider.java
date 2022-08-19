@@ -2,6 +2,7 @@ package ru.mrbrikster.shoppingcartreborn.spigot.providers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,6 +23,7 @@ public class SpigotItemProvider implements ItemProvider {
         String minecraftId = serializableItem.getMinecraftId();
 
         Material material = Materials.fromMinecraftId(minecraftId);
+
         ItemStack itemStack = new ItemStack(material, serializableItem.getCount());
 
         if (serializableItem.getDataValue() != 0) {
@@ -37,6 +39,11 @@ public class SpigotItemProvider implements ItemProvider {
         if (serializableItem.getLore() != null) {
             itemMeta.setLore(serializableItem.getLore().stream().map(loreString -> ChatColor.translateAlternateColorCodes('&', loreString)).collect(Collectors.toList()));
         }
+
+        serializableItem.getEnchants().forEach((enchantName, level) -> {
+            Enchantment enchant = Enchantment.getByName(enchantName);
+            itemMeta.addEnchant(enchant, level, true);
+        });
 
         itemStack.setItemMeta(itemMeta);
 

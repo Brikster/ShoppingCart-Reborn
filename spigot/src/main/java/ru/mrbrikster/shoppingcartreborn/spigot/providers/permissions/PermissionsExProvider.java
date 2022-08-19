@@ -9,50 +9,36 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 public class PermissionsExProvider implements PermissionProvider {
 
     @Override
-    public boolean addToGroup(User user, String group, long time) {
+    public boolean addToGroup(User user, String group, Long time) {
         if (!(user instanceof BukkitUser)) {
             return false;
         }
 
         PermissionUser permissionUser = PermissionsEx.getUser(((BukkitUser) user).getAsPlayer());
 
-        permissionUser.addGroup(group, null, time);
+        if (time == null) {
+            permissionUser.addGroup(group);
+        } else {
+            permissionUser.addGroup(group, null, time);
+        }
+
         return true;
     }
 
     @Override
-    public boolean addToGroup(User user, String group) {
+    public boolean addPermission(User user, String permission, Long time) {
         if (!(user instanceof BukkitUser)) {
             return false;
         }
 
         PermissionUser permissionUser = PermissionsEx.getUser(((BukkitUser) user).getAsPlayer());
 
-        permissionUser.addGroup(group);
-        return true;
-    }
-
-    @Override
-    public boolean addPermission(User user, String permission, long time) {
-        if (!(user instanceof BukkitUser)) {
-            return false;
+        if (time == null) {
+            permissionUser.addPermission(permission);
+        } else {
+            permissionUser.addTimedPermission(permission, null, Math.toIntExact(time));
         }
 
-        PermissionUser permissionUser = PermissionsEx.getUser(((BukkitUser) user).getAsPlayer());
-
-        permissionUser.addTimedPermission(permission, null, (int) time);
-        return true;
-    }
-
-    @Override
-    public boolean addPermission(User user, String permission) {
-        if (!(user instanceof BukkitUser)) {
-            return false;
-        }
-
-        PermissionUser permissionUser = PermissionsEx.getUser(((BukkitUser) user).getAsPlayer());
-
-        permissionUser.addPermission(permission);
         return true;
     }
 

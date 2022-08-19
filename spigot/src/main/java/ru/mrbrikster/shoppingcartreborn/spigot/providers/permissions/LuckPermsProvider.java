@@ -1,32 +1,46 @@
 package ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions;
 
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.User;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.mrbrikster.shoppingcartreborn.providers.PermissionProvider;
 import ru.mrbrikster.shoppingcartreborn.spigot.cart.BukkitUser;
 
+import lombok.var;
+
 import java.util.concurrent.TimeUnit;
 
 public class LuckPermsProvider implements PermissionProvider {
 
-    private static RegisteredServiceProvider<LuckPermsApi> luckPermsProvider = Bukkit.getServicesManager().getRegistration(LuckPermsApi.class);
+    private static final RegisteredServiceProvider<LuckPerms> luckPermsProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 
     @Override
-    public boolean addToGroup(ru.mrbrikster.shoppingcartreborn.cart.User user, String group, long time) {
+    public boolean addToGroup(ru.mrbrikster.shoppingcartreborn.cart.User user, String group, Long time) {
         if (!(user instanceof BukkitUser)) {
             return false;
         }
 
         if (luckPermsProvider != null) {
-            LuckPermsApi api = luckPermsProvider.getProvider();
+            LuckPerms api = luckPermsProvider.getProvider();
 
-            User luckyPermsUser = api.getUser(((BukkitUser) user).getAsPlayer().getName());
+            User luckyPermsUser = api.getUserManager().getUser(((BukkitUser) user).getAsPlayer().getName());
 
-            boolean result = luckyPermsUser.setPermission(api.getNodeFactory()
-                    .newBuilder("group." + group)
-                    .setExpiry(time, TimeUnit.SECONDS).build()).wasSuccess();
+            if (luckyPermsUser == null) {
+                return false;
+            }
+
+            var builder = api.getNodeBuilderRegistry()
+                    .forInheritance()
+                    .group(group);
+
+            if (time != null) {
+                builder = builder.expiry(time, TimeUnit.SECONDS);
+            }
+
+            boolean result = luckyPermsUser.data()
+                    .add(builder.build())
+                    .wasSuccessful();
 
             api.getUserManager().saveUser(luckyPermsUser);
 
@@ -37,63 +51,31 @@ public class LuckPermsProvider implements PermissionProvider {
     }
 
     @Override
-    public boolean addToGroup(ru.mrbrikster.shoppingcartreborn.cart.User user, String group) {
+    public boolean addPermission(ru.mrbrikster.shoppingcartreborn.cart.User user, String permission, Long time) {
         if (!(user instanceof BukkitUser)) {
             return false;
         }
 
         if (luckPermsProvider != null) {
-            LuckPermsApi api = luckPermsProvider.getProvider();
+            LuckPerms api = luckPermsProvider.getProvider();
 
-            User luckyPermsUser = api.getUser(((BukkitUser) user).getAsPlayer().getName());
+            User luckyPermsUser = api.getUserManager().getUser(((BukkitUser) user).getAsPlayer().getName());
 
-            boolean result = luckyPermsUser.setPermission(api.getNodeFactory()
-                    .newBuilder("group." + group).build()).wasSuccess();
+            if (luckyPermsUser == null) {
+                return false;
+            }
 
-            api.getUserManager().saveUser(luckyPermsUser);
+            var builder = api.getNodeBuilderRegistry()
+                    .forPermission()
+                    .permission(permission);
 
-            return result;
-        }
+            if (time != null) {
+                builder = builder.expiry(time, TimeUnit.SECONDS);
+            }
 
-        return false;
-    }
-
-    @Override
-    public boolean addPermission(ru.mrbrikster.shoppingcartreborn.cart.User user, String permission, long time) {
-        if (!(user instanceof BukkitUser)) {
-            return false;
-        }
-
-        if (luckPermsProvider != null) {
-            LuckPermsApi api = luckPermsProvider.getProvider();
-
-            User luckyPermsUser = api.getUser(((BukkitUser) user).getAsPlayer().getName());
-
-            boolean result = luckyPermsUser.setPermission(api.getNodeFactory()
-                    .newBuilder(permission)
-                    .setExpiry(time, TimeUnit.SECONDS).build()).wasSuccess();
-
-            api.getUserManager().saveUser(luckyPermsUser);
-
-            return result;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean addPermission(ru.mrbrikster.shoppingcartreborn.cart.User user, String permission) {
-        if (!(user instanceof BukkitUser)) {
-            return false;
-        }
-
-        if (luckPermsProvider != null) {
-            LuckPermsApi api = luckPermsProvider.getProvider();
-
-            User luckyPermsUser = api.getUser(((BukkitUser) user).getAsPlayer().getName());
-
-            boolean result = luckyPermsUser.setPermission(api.getNodeFactory()
-                    .newBuilder(permission).build()).wasSuccess();
+            boolean result = luckyPermsUser
+                    .data()
+                    .add(builder.build()).wasSuccessful();
 
             api.getUserManager().saveUser(luckyPermsUser);
 

@@ -8,6 +8,7 @@ import ru.mrbrikster.shoppingcartreborn.cart.User;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.Purchase;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.PurchaseDisplayData;
 import ru.mrbrikster.shoppingcartreborn.cart.purchase.types.ItemPurchase;
+import ru.mrbrikster.shoppingcartreborn.objects.SerializableItem;
 import ru.mrbrikster.shoppingcartreborn.spigot.ShoppingCartReborn;
 import ru.mrbrikster.baseplugin.commands.BukkitCommand;
 import ru.mrbrikster.baseplugin.menu.Icon;
@@ -67,10 +68,20 @@ public class CartCommand extends BukkitCommand {
                             purchases.forEach(purchase -> {
                                 PurchaseDisplayData purchaseDisplayData = purchase.getDisplayData();
 
+                                Material material = null;
+                                int dataValue = 0;
+                                if (purchase instanceof ItemPurchase) {
+                                    SerializableItem serializableItem = ((ItemPurchase) purchase).getSerializableItem();
+                                    String minecraftId = serializableItem.getMinecraftId();
+                                    material = Materials.fromMinecraftId(minecraftId);
+                                    dataValue = serializableItem.getDataValue();
+                                }
+
                                 iconList.add(Icon.builder()
-                                        .type(purchase instanceof ItemPurchase
-                                                ? Materials.fromMinecraftId(((ItemPurchase) purchase).getSerializableItem().getMinecraftId())
-                                                : Material.CHEST)
+                                        .type(material == null
+                                                ? Material.CHEST
+                                                : material)
+                                        .dataValue(dataValue)
                                         .name("&6" + purchaseDisplayData.getName())
                                         .lore(purchaseDisplayData.getLore())
                                         .lore("")

@@ -20,6 +20,8 @@ import ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions.Permissions
 import ru.mrbrikster.shoppingcartreborn.spigot.providers.permissions.VaultPermissionProvider;
 import ru.mrbrikster.shoppingcartreborn.spigot.providers.SpigotItemProvider;
 
+import java.util.logging.Logger;
+
 public final class ShoppingCartReborn extends BukkitBasePlugin implements ShoppingCartRebornPlugin {
 
     private static ShoppingCartReborn instance;
@@ -62,7 +64,7 @@ public final class ShoppingCartReborn extends BukkitBasePlugin implements Shoppi
         this.commandManager.register();
 
         ConfigurationNode credentialsNode = getConfiguration().getNode("database");
-        DatabaseCredentials databaseCredentials = new DatabaseCredentials(
+        DatabaseCredentials databaseCredentials = DatabaseCredentials.of(
                 credentialsNode.getNode("address").getAsString("127.0.0.1"),
                 credentialsNode.getNode("port").getAsInt(3306),
                 credentialsNode.getNode("username").getAsString("root"),
@@ -72,6 +74,7 @@ public final class ShoppingCartReborn extends BukkitBasePlugin implements Shoppi
                 credentialsNode.getNode("tables.templates").getAsString("templates"),
                 credentialsNode.getNode("ssl").getAsBoolean(false)
         );
+
         this.databaseManager = new DatabaseManager(this, databaseCredentials);
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -105,6 +108,11 @@ public final class ShoppingCartReborn extends BukkitBasePlugin implements Shoppi
     @Override
     public DatabaseManager getDatabaseManager() {
         return databaseManager;
+    }
+
+    @Override
+    public Logger getLogger() {
+        return super.getLogger();
     }
 
 }

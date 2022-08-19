@@ -26,7 +26,7 @@ auto-cart-all: true
 messages:
   only-player: '&cКоманда предназначена только для игроков.'
   cart-all: '&aВам выданы все товары из вашей корзины.'
-  cart-get: '&aВы получили товар из корзины'
+  cart-get: '&aВы получили товар из корзины.'
   no-purchases: '&cУ вас нет товаров в корзине.'
   command-usage: '&cИспользование: /%label% <all|open>'
 

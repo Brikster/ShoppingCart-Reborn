@@ -1,5 +1,6 @@
 package ru.mrbrikster.shoppingcartreborn.cart.purchase.types;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import ru.mrbrikster.shoppingcartreborn.ShoppingCartRebornPlugin;
@@ -10,7 +11,9 @@ import ru.mrbrikster.shoppingcartreborn.objects.SerializableItem;
 import ru.mrbrikster.shoppingcartreborn.providers.ItemProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemPurchase implements Purchase {
 
@@ -39,34 +42,33 @@ public class ItemPurchase implements Purchase {
             return null;
         }
 
-        int dataValue;
+        int dataValue = 0;
         if (jsonObject.has("dataValue")) {
             dataValue = jsonObject.get("dataValue").getAsInt();
-        } else {
-            dataValue = 0;
         }
 
-        int count;
+        int count = 1;
         if (jsonObject.has("count")) {
             count = jsonObject.get("count").getAsInt();
-        } else {
-            count = 1;
         }
 
-        String name;
+        String name = null;
         if (jsonObject.has("name")) {
             name = jsonObject.get("name").getAsString();
-        } else {
-            name = null;
         }
 
-        List<String> lore;
+        List<String> lore = null;
         if (jsonObject.has("lore")) {
             lore = new ArrayList<>();
-            jsonObject.getAsJsonArray("lore").forEach(
-                    loreString -> lore.add(loreString.getAsString()));
-        } else {
-            lore = null;
+            for (JsonElement loreString : jsonObject.getAsJsonArray("lore")) {
+                lore.add(loreString.getAsString());
+            }
+        }
+
+        Map<String, Integer> enchants = new HashMap<>();
+        if (jsonObject.has("enchants")) {
+            JsonObject enchantsObject = jsonObject.getAsJsonObject("enchants");
+            enchantsObject.keySet().forEach(key -> enchants.put(key, enchantsObject.getAsJsonPrimitive(key).getAsInt()));
         }
 
         return new ItemPurchase(SerializableItem.builder()
@@ -75,6 +77,7 @@ public class ItemPurchase implements Purchase {
                 .count(count)
                 .name(name)
                 .lore(lore)
+                .enchants(enchants)
                 .build(), purchaseDisplayData, shoppingCartRebornPlugin.getItemProvider());
     }
 
@@ -105,7 +108,6 @@ public class ItemPurchase implements Purchase {
 
         jsonObject.add("purchaseData", purchaseData);
         jsonObject.add("displayData", purchaseDisplayData.serialize());
-
 
         return jsonObject;
     }

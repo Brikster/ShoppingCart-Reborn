@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 public class DatabaseManager {
 
@@ -67,8 +68,8 @@ public class DatabaseManager {
                                     "id INTEGER AUTO_INCREMENT, " +
                                     "player_name VARCHAR(16) NOT NULL, " +
                                     "player_uuid CHAR(36) DEFAULT NULL, " +
-                                    "purchase VARCHAR(256), " +
-                                    "created_at TIMESTAMP, " +
+                                    "purchase TEXT, " +
+                                    "created_at TIMESTAMP DEFAULT current_timestamp, " +
                                     "PRIMARY KEY (id))");
 
             statement.executeUpdate();
@@ -77,9 +78,9 @@ public class DatabaseManager {
             statement = connection
                     .prepareStatement(
                             "CREATE TABLE IF NOT EXISTS " + templatesTable + " (" +
-                                    "id INTEGER AUTO_INCREMENT, " +
-                                    "template VARCHAR(256), " +
-                                    "PRIMARY KEY (id))");
+                                    "name VARCHAR(64), " +
+                                    "template TEXT, " +
+                                    "PRIMARY KEY (name))");
 
             statement.executeUpdate();
             statement.close();
@@ -107,9 +108,15 @@ public class DatabaseManager {
             List<Purchase> purchases = new ArrayList<>();
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    JsonObject jsonObject = JSON_PARSER.parse(resultSet.getString("purchase")).getAsJsonObject();
+                    Purchase purchase;
 
-                    Purchase purchase = Purchase.getDeserializer().deserialize(shoppingCartRebornPlugin, jsonObject);
+                    try {
+                        JsonObject jsonObject = JSON_PARSER.parse(resultSet.getString("purchase")).getAsJsonObject();
+                        purchase = Purchase.getDeserializer().deserialize(shoppingCartRebornPlugin, jsonObject);
+                    } catch (Throwable t) {
+                        shoppingCartRebornPlugin.getLogger().log(Level.SEVERE, "Cannot parse purchase with id " + resultSet.getInt("id"));
+                        continue;
+                    }
 
                     if (purchase != null) {
                         purchases.add(purchase.setId(resultSet.getInt("id")));
@@ -127,23 +134,23 @@ public class DatabaseManager {
         return Collections.emptyList();
     }
 
+    public JsonObject getTemplate(String name) {
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT template FROM " + templatesTable + " WHERE name = ?")) {
+                preparedStatement.setString(1, name);
 
-    public JsonObject getTemplate(int id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection
-                     .prepareStatement("SELECT template FROM " + templatesTable + " WHERE id = ?")) {
-            preparedStatement.setInt(1, id);
-
-            JsonObject jsonObject = null;
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    jsonObject = JSON_PARSER.parse(resultSet.getString("template")).getAsJsonObject();
+                JsonObject jsonObject = null;
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        jsonObject = JSON_PARSER.parse(resultSet.getString("template")).getAsJsonObject();
+                    }
                 }
+
+                preparedStatement.close();
+
+                return jsonObject;
             }
-
-            preparedStatement.close();
-
-            return jsonObject;
         } catch (SQLException e) {
             e.printStackTrace();
         }

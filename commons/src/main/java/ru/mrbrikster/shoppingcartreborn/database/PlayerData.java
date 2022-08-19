@@ -6,20 +6,22 @@
 
 package ru.mrbrikster.shoppingcartreborn.database;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 import java.sql.Timestamp;
 
 @AllArgsConstructor
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class PlayerData {
 
-    @Getter private String name;
-    @Getter private String password;
-    @Getter private String ip;
-    @Getter @Setter private String email;
-    @Getter private Timestamp session;
-    @Getter private String server;
+    String name;
+    String password;
+    String ip;
+    @NonFinal String email;
+    Timestamp session;
+    String server;
 
 }

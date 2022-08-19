@@ -27,11 +27,7 @@ public class BukkitUser implements User {
     }
 
     public Player getAsPlayer() {
-        if (uniqueId != null) {
-            return Bukkit.getPlayer(uniqueId);
-        } else {
-            return Bukkit.getPlayer(name);
-        }
+        return Bukkit.getPlayer(name);
     }
 
     public static BukkitUser of(Player player) {

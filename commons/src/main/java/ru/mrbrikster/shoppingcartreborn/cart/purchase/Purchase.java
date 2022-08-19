@@ -17,4 +17,5 @@ public interface Purchase extends Serializable {
     static Deserializer<Purchase> getDeserializer() {
         return new PurchaseDeserializer();
     }
+
 }
