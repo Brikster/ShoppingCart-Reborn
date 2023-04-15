@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id "xyz.jpenilla.run-paper" version "2.0.0"
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'ru.brikster'
+version = '2.0.0-SNAPSHOT'
+
+tasks {
+    compileJava {
+        options.encoding = 'UTF-8'
+    }
+    shadowJar {
+        archiveFileName = "ShoppingcartReborn-${rootProject.version}.jar"
+        def relocates = ["net.kyori.adventure"]
+        for (def pkg in relocates) {
+            relocate(pkg, "ru.brikster.shoppingcartreborn.shaded.${pkg}")
+        }
+    }
+    build {
+        dependsOn(shadowJar)
+    }
+    runServer {
+        systemProperty("file.encoding", "UTF-8")
+        minecraftVersion("1.19.3")
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven { url "https://storehouse.okaeri.eu/repository/maven-public/" }
+}
+
+def jacksonVersion = "2.14.2"
+def jdbiVersion = "3.37.1"
+
+dependencies {
+    //noinspection VulnerableLibrariesLocal
+    compileOnly 'com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT'
+
+    implementation "net.kyori:adventure-api:4.12.0"
+    implementation "net.kyori:adventure-platform-bukkit:4.2.0"
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+	implementation "org.jetbrains:annotations:16.0.2"
+
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    implementation 'org.postgresql:postgresql:42.5.1'
+
+    implementation "org.jdbi:jdbi3-core:$jdbiVersion"
+    implementation "org.jdbi:jdbi3-sqlobject:$jdbiVersion"
+    implementation "org.jdbi:jdbi3-postgres:$jdbiVersion"
+    implementation "eu.okaeri:okaeri-configs-yaml-snakeyaml:4.0.6"
+}
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

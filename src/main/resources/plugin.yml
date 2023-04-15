@@ -1,0 +1,7 @@
+name: ShoppingcartReborn
+version: '${version}'
+main: ru.brikster.shoppingcartreborn.ShoppingcartRebornPlugin
+api-version: 1.19
+authors: [ Brikster ]
+commands:
+  cart: {}
